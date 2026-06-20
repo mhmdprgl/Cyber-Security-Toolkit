@@ -81,7 +81,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       <div class="logo">CST</div>
       <div>
         <div class="h1">Cyber Security Toolkit</div>
-        <div class="plead">Passwords · Crypto · Site Tests — 🔰 مشکی-سبز</div>
+        <div class="plead">Passwords · Crypto · Site Tests — 🔰 </div>
       </div>
     </div>
 
@@ -268,7 +268,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       <div class="tab" id="paymentTab" style="display:none">
         <h3>ابزار پرداخت — Luhn</h3>
         <div class="card">
-          <p class="muted-2">فقط برای تست/توسعه. استفاده در تراکنش واقعی مجاز نیست.</p>
+          <p class="muted-2">فقط برای توسعه.</p>
           <label for="luhnInput">شماره کارت</label>
           <div style="display:flex;gap:8px;align-items:center">
             <input id="luhnInput" type="text" placeholder="4242424242424242" />
@@ -299,9 +299,9 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
 
       <!-- SITE SECURITY (NEW) -->
       <div class="tab" id="siteTab" style="display:none">
-        <h3>Site Security — بررسی سایت (قانونی و آموزشی)</h3>
+        <h3>Site Security — بررسی سایت </h3>
         <div class="card">
-          <p class="muted-2">این تب چند بررسی پایه و امن انجام می‌دهد: بررسی HTTPS/پروتکل، وضعیت HTTP، هدرهای امنیتی و یک «پروب نمایشی پورت» محدود. قبل از انجام، تیک تأیید را بزنید.</p>
+          <p class="muted-2">این تب چند بررسی پایه و امن انجام می‌دهد: بررسی HTTPS/پروتکل، وضعیت HTTP، هدرهای امنیتی و یک . قبل از انجام، تیک تأیید را بزنید.</p>
 
           <label for="siteUrl">آدرس سایت (مثال: https://example.com)</label>
           <input id="siteUrl" type="text" placeholder="https://example.com" />
@@ -385,7 +385,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
 
     </section>
 
-    <div style="margin-top:12px;color:var(--muted)">نسخه محلی • استفادهٔ مسئولانه و قانونی الزامی است.</div>
+    <div style="margin-top:12px;color:var(--muted)"> استفادهٔ مسئولانه و قانونی الزامی است.</div>
   </main>
 </div>
 
@@ -702,7 +702,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
   runBtn.addEventListener('click', runSiteChecks);
 
   // small helpers & init
-  $('#aboutBtn').addEventListener('click', ()=> alert('Cyber Security Toolkit — local tool. Use responsibly and legally.'));
+  $('#aboutBtn').addEventListener('click', ()=> alert('MHMDPRGL'));
   $('#themeSelect').addEventListener('change', (e)=> {
     if (e.target.value === 'light') { document.documentElement.style.setProperty('--bg','#f6f8fb'); document.documentElement.style.setProperty('--card','#ffffff'); document.documentElement.style.setProperty('--neon','#157f5b'); document.documentElement.style.color='#06111a'; }
     else { document.documentElement.style.setProperty('--bg','#050607'); document.documentElement.style.setProperty('--neon','#39ff9a'); document.documentElement.style.color='inherit'; }
