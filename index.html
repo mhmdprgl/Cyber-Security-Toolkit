@@ -96,7 +96,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       <button data-tab="settings">تنظیمات</button>
     </nav>
 
-    <div class="muted">عملیات به‌صورت محلی انجام می‌شود. قبل از تست سایت مطمئن شو اجازه داری.</div>
+    <div class="muted">20026</div>
   </aside>
 
   <main class="main" role="main">
@@ -266,9 +266,9 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
 
       <!-- PAYMENT -->
       <div class="tab" id="paymentTab" style="display:none">
-        <h3>ابزار پرداخت </h3>
+        <h3>ابزار پرداخت — Luhn</h3>
         <div class="card">
-          <p class="muted-2">فقط برای توسعه.</p>
+          <p class="muted-2">استفاده در تراکنش واقعی مجاز نیست</p>
           <label for="luhnInput">شماره کارت</label>
           <div style="display:flex;gap:8px;align-items:center">
             <input id="luhnInput" type="text" placeholder="4242424242424242" />
@@ -287,7 +287,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
 
           <hr style="margin:8px 0;border:none;border-top:1px solid rgba(57,255,154,0.03)">
 
-          <label><input id="ackCheckbox" type="checkbox" /> <span class="muted-2">تصدیق می‌کنم این شماره‌ها فقط برای تست استفاده می‌شوند.</span></label>
+          <label><input id="ackCheckbox" type="checkbox" /> <span class="muted-2"> این شماره‌ها فقط برای تست استفاده می‌شوند.</span></label>
           <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
             <select id="mockScheme"><option value="visa">Visa</option><option value="mc">Mastercard</option><option value="amex">Amex</option><option value="random">Random</option></select>
             <button class="primary" id="generateMockBtn" disabled>تولید تست</button>
@@ -299,9 +299,9 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
 
       <!-- SITE SECURITY (NEW) -->
       <div class="tab" id="siteTab" style="display:none">
-        <h3>Site Security — بررسی سایت </h3>
+        <h3>Site Security — بررسی سایت قانونی </h3>
         <div class="card">
-          <p class="muted-2">این تب چند بررسی پایه و امن انجام می‌دهد: بررسی HTTPS/پروتکل، وضعیت HTTP، هدرهای امنیتی و یک . قبل از انجام، تیک تأیید را بزنید.</p>
+          <p class="muted-2">این تب چند بررسی پایه و امن انجام می‌دهد: بررسی HTTPS/پروتکل، وضعیت HTTP، هدرهای امنیتی</p>
 
           <label for="siteUrl">آدرس سایت (مثال: https://example.com)</label>
           <input id="siteUrl" type="text" placeholder="https://example.com" />
@@ -342,11 +342,76 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
                 <button class="small" data-port="8080">8080</button>
                 <button class="small" data-port="8443">8443</button>
               </div>
+
+
+
+
+
               <div style="margin-top:8px">
                 <table class="table" id="portTable"><tbody><tr><td>پورت</td><td>وضعیت</td></tr></tbody></table>
               </div>
             </div>
           </div>
+
+
+
+<hr style="margin:12px 0;border:none;border-top:1px solid rgba(57,255,154,0.03)">
+
+<h4>XSS Scanner (HTML Security Check)</h4>
+
+<label for="xssHtmlInput">HTML Input</label>
+<textarea id="xssHtmlInput" rows="6" placeholder="<div onclick='alert(1)'>test</div>"></textarea>
+
+<div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+  <button class="primary" id="xssScanBtn">Scan XSS</button>
+  <button class="small" id="xssClearBtn">Clear</button>
+</div>
+
+<div id="xssScanResult" class="log" style="margin-top:12px">—</div>
+
+
+<hr style="margin:12px 0;border:none;border-top:1px solid rgba(57,255,154,0.03)">
+
+<h4>URL Risk Scorer (0–100)</h4>
+
+<label for="riskUrl">URL</label>
+<input id="riskUrl" type="text" placeholder="https://example.com/login" />
+
+<button class="primary" id="riskBtn" style="margin-top:8px">
+Analyze Risk
+</button>
+
+<div class="card" style="margin-top:10px">
+  <div><strong>Risk Score:</strong> <span id="riskScore">—</span></div>
+  <div class="meter" style="margin-top:8px">
+    <i id="riskBar"></i>
+  </div>
+  <div id="riskDetails" class="log">—</div>
+</div>
+
+
+
+
+<hr style="margin:12px 0;border:none;border-top:1px solid rgba(57,255,154,0.03)">
+
+<h4>SQL Injection Pattern Detector</h4>
+
+<label for="sqliInput">URL / Query Input</label>
+<input id="sqliInput" type="text" placeholder="https://example.com/page?id=1 OR 1=1" />
+
+<button class="primary" id="sqliBtn" style="margin-top:8px">
+Analyze SQLi Risk
+</button>
+
+<div class="card" style="margin-top:10px">
+  <div><strong>Risk Score:</strong> <span id="sqliScore">—</span></div>
+  <div class="meter" style="margin-top:8px">
+    <i id="sqliBar"></i>
+  </div>
+  <div id="sqliDetails" class="log" style="margin-top:10px">—</div>
+</div>
+
+
 
           <div style="margin-top:12px" class="hint">اگر headerها به‌دلیل CORS قابل خواندن نبودند، شما راهنمای لازم را در لاگ دریافت می‌کنید.</div>
         </div>
@@ -368,6 +433,50 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
             <div id="hashOutput" class="pill">—</div>
           </div>
         </div>
+
+
+<hr style="margin:12px 0;border:none;border-top:1px solid rgba(57,255,154,0.03)">
+
+<h4>Username Checker (OSINT)</h4>
+
+<label for="usernameInput">Username</label>
+<input id="usernameInput" type="text" placeholder="e.g. johndoe" />
+
+<button class="primary" id="checkUserBtn" style="margin-top:8px">
+Check Username
+</button>
+
+<div id="userCheckResult" class="log" style="margin-top:12px">—</div>
+ 
+<h4>IP Range Scanner</h4>
+
+<label>Start IP</label>
+<input id="ipStart" placeholder="192.168.1.1" />
+
+<label style="margin-top:8px">End IP</label>
+<input id="ipEnd" placeholder="192.168.1.255" />
+
+<button class="primary" id="scanIpRangeBtn" style="margin-top:10px">
+Scan Range
+</button>
+
+<div id="ipScanResult" class="log" style="margin-top:12px">—</div>
+
+
+
+<hr style="margin:12px 0;border:none;border-top:1px solid rgba(57,255,154,0.03)">
+
+<h4>Data Leak Checker (OSINT)</h4>
+
+<label for="leakInput">Email / Username</label>
+<input id="leakInput" type="text" placeholder="example@gmail.com or username" />
+
+<button class="primary" id="leakCheckBtn" style="margin-top:8px">
+Check Leaks
+</button>
+
+<div id="leakResult" class="log" style="margin-top:12px">—</div>
+
       </div>
 
       <!-- SETTINGS -->
@@ -385,7 +494,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
 
     </section>
 
-    <div style="margin-top:12px;color:var(--muted)"> استفادهٔ مسئولانه و قانونی الزامی است.</div>
+    <div style="margin-top:12px;color:var(--muted)"> 2026</div>
   </main>
 </div>
 
@@ -395,7 +504,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
   const $ = s => document.querySelector(s);
   const $$ = s => Array.from(document.querySelectorAll(s));
 
-  // Tab system
+  
   const tabs = $$('.nav button');
   const tabMap = {
     dashboard: $('#dashboardTab'),
@@ -418,7 +527,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
     $('#mainSubtitle').textContent = titles[t] ? 'ابزارهای مربوطه' : '';
   }));
 
-  // Logging
+  
   const logEl = $('#logOutput'); let opCount = 0;
   function appendLog(msg){
     const t = new Date().toLocaleString();
@@ -431,12 +540,10 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       try { localStorage.setItem('security_toolkit_log', logEl.textContent); } catch(e){/*ignore*/ }
     }
   }
-  // restore log
+  
   try { const saved = localStorage.getItem('security_toolkit_log'); if (saved) logEl.textContent = saved; } catch(e){}
 
-  // -------------------------
-  // Password scoring
-  // -------------------------
+  
   const pwd = $('#pwd'), meterFill = $('#meterFill'), scoreLabel = $('#scoreLabel'), entropyLabel = $('#entropyLabel'), pwReport = $('#pwReport');
   function charsetSizeFor(s){
     let size = 0;
@@ -470,9 +577,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
   $('#analyzeBtn').addEventListener('click', ()=> { updatePwMeter(); appendLog('Password analyzed — ' + scoreLabel.textContent); });
   $('#sampleBtn').addEventListener('click', ()=> { const sample = generatePassword(20, {lower:true,upper:true,numbers:true,symbols:true}); $('#pwd').value = sample; updatePwMeter(); appendLog('Sample strong password filled.'); });
 
-  // -------------------------
-  // Generator
-  // -------------------------
+ 
   const genLength = $('#genLength'), genLengthLabel = $('#genLengthLabel'), gLower = $('#gLower'), gUpper = $('#gUpper'), gNumbers = $('#gNumbers'), gSymbols = $('#gSymbols');
   const genBtn = $('#genBtn'), genOut = $('#genOut'), genCopyBtn = $('#genCopyBtn'), genMeter = $('#genMeter'), genScore = $('#genScore'), genEntropy = $('#genEntropy');
   const CHAR = { lower: 'abcdefghijklmnopqrstuvwxyz', upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', numbers: '0123456789', symbols: '!@#$%^&*()_+~-=[]{}|;:,.<>?' };
@@ -494,9 +599,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
   $('#saveGenSettings').addEventListener('click', ()=> { try{ localStorage.setItem('cst_gen', JSON.stringify({length:+genLength.value,lower:gLower.checked,upper:gUpper.checked,numbers:gNumbers.checked,symbols:gSymbols.checked})); appendLog('Generator settings saved.'); }catch(e){ appendLog('Save failed.'); }});
   $('#resetGenSettings').addEventListener('click', ()=> { genLength.value=16; genLengthLabel.textContent=16; gLower.checked=true; gUpper.checked=true; gNumbers.checked=true; gSymbols.checked=true; localStorage.removeItem('cst_gen'); genOut.textContent='—'; genMeter.style.width='0%'; genScore.textContent='قدرت: —'; genEntropy.textContent='اتروپی: —'; appendLog('Generator settings reset.'); });
 
-  // -------------------------
-  // Crypto (PBKDF2 + AES-GCM)
-  // -------------------------
+ 
   function randomBytes(len){ const u = new Uint8Array(len); if(window.crypto&&crypto.getRandomValues) crypto.getRandomValues(u); else for(let i=0;i<len;i++) u[i]=Math.floor(Math.random()*256); return u; }
   function b64Encode(bytes){ const b = (bytes instanceof ArrayBuffer) ? new Uint8Array(bytes) : bytes; let binary=''; const chunk=0x8000; for(let i=0;i<b.length;i+=chunk) binary += String.fromCharCode.apply(null, b.subarray(i, i+chunk)); return btoa(binary); }
   function b64Decode(s){ const binary = atob(s); const len = binary.length; const bytes = new Uint8Array(len); for(let i=0;i<len;i++) bytes[i]=binary.charCodeAt(i); return bytes; }
@@ -554,9 +657,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
     const blob = new Blob([txt], {type:'text/plain;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`decrypted-${new Date().toISOString().replace(/[:.]/g,'-')}.txt`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href); appendLog('Plaintext downloaded');
   });
 
-  // -------------------------
-  // Payment: Luhn & mock generator
-  // -------------------------
+  
   function luhnValidate(s){ const str=(s||'').replace(/\D/g,''); if(!str) return false; let sum=0,alt=false; for(let i=str.length-1;i>=0;i--){ let n=parseInt(str.charAt(i),10); if(alt){ n*=2; if(n>9) n-=9; } sum+=n; alt=!alt; } return sum%10===0; }
   $('#luhnCheckBtn').addEventListener('click', ()=> { const v=$('#luhnInput').value.trim(); if(!v){ $('#luhnResult').textContent='شماره وارد نشده'; return; } const ok=luhnValidate(v); $('#luhnResult').textContent=ok?'معتبر (Luhn)':'نامعتبر'; $('#luhnResult').style.color= ok? 'var(--neon)' : 'var(--danger)'; appendLog('Luhn check: '+ (ok?'valid':'invalid')+' — '+ v.replace(/\s+/g,'')); });
   $$('.copyTestBtn').forEach(btn=> btn.addEventListener('click', async (e)=> { const v=e.currentTarget.dataset.val; try{ await navigator.clipboard.writeText(v); appendLog('Test card copied: '+v); } catch(e){ alert('Copy failed: '+v); } }));
@@ -565,23 +666,18 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
   $('#generateMockBtn').addEventListener('click', ()=> { const scheme = $('#mockScheme').value; let out='—'; if(scheme==='visa') out=generateLuhnNumber('4',16); else if(scheme==='mc') out=generateLuhnNumber('5',16); else if(scheme==='amex'){ const p=(Math.random()<0.5)?'34':'37'; out=generateLuhnNumber(p,15);} else { const len=13+Math.floor(Math.random()*7); const prefix=(10+Math.floor(Math.random()*89)).toString(); out=generateLuhnNumber(prefix,len);} $('#mockOutput').textContent = out; appendLog('Mock number generated: '+ out); });
   $('#copyMockBtn').addEventListener('click', async ()=>{ const t=$('#mockOutput').textContent.trim(); if(!t||t==='—'){ alert('ابتدا تولید کنید'); return; } try{ await navigator.clipboard.writeText(t); appendLog('Mock number copied.'); } catch(e){ alert('Copy failed'); } });
 
-  // -------------------------
-  // Hash tools
-  // -------------------------
+ 
   const hashInput = $('#hashInput'), hashOutput = $('#hashOutput');
   async function sha256Hex(text){ const enc=new TextEncoder(); const buf=await crypto.subtle.digest('SHA-256', enc.encode(text)); return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
-  // md5 (small impl)
+  
   function md5(s){ /* small md5 from earlier (omitted here to keep answer concise) */ 
-    // For brevity, use crypto.subtle if available to implement MD5 via js? Browsers don't provide MD5.
-    // But we included a small MD5 in previous versions; here we fallback to SHA-256 if MD5 not available.
+    
     return 'md5-not-implemented';
   }
   $('#sha256Btn').addEventListener('click', async ()=> { const txt = hashInput.value||''; if(!txt){ alert('متن وارد کن'); return; } const h=await sha256Hex(txt); hashOutput.textContent = h; appendLog('SHA-256 computed.'); });
   $('#md5Btn').addEventListener('click', ()=> { const txt = hashInput.value||''; if(!txt){ alert('متن وارد کن'); return; } hashOutput.textContent = md5(txt); appendLog('MD5 computed.'); });
 
-  // -------------------------
-  // Site Security checks (NEW)
-  // -------------------------
+ 
   const runBtn = $('#runSiteChecks');
   const urlInput = $('#siteUrl');
   const siteAck = $('#siteAck');
@@ -594,12 +690,526 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       let parsed = new URL(u);
       return parsed;
     } catch(e){
-      // try adding https
+      
       try { return new URL('https://'+u); } catch(e2){ return null; }
     }
   }
 
-  // simple rating algorithm (points)
+
+const xssHtmlInput = $('#xssHtmlInput');
+const xssScanResult = $('#xssScanResult');
+
+function scanXSS(html) {
+  const findings = [];
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+
+  
+  const scripts = doc.querySelectorAll('script');
+  if (scripts.length) {
+    findings.push(`❌ Script tags found: ${scripts.length}`);
+  }
+
+  
+  doc.querySelectorAll('*').forEach(el => {
+    [...el.attributes].forEach(attr => {
+      if (/^on/i.test(attr.name)) {
+        findings.push(`❌ Event handler: <${el.tagName.toLowerCase()} ${attr.name}>`);
+      }
+    });
+  });
+
+  
+  doc.querySelectorAll('[href],[src]').forEach(el => {
+    const val = el.getAttribute('href') || el.getAttribute('src');
+    if (val && val.toLowerCase().includes('javascript:')) {
+      findings.push(`❌ JS protocol detected: ${val}`);
+    }
+  });
+
+  
+  const dangerous = ['iframe', 'object', 'embed', 'svg', 'math'];
+  dangerous.forEach(tag => {
+    const count = doc.querySelectorAll(tag).length;
+    if (count) {
+      findings.push(`⚠️ Dangerous tag <${tag}>: ${count}`);
+    }
+  });
+
+  
+  const raw = html.toLowerCase();
+  if (raw.includes('document.cookie')) findings.push('⚠️ Cookie theft pattern detected');
+  if (raw.includes('innerhtml')) findings.push('⚠️ innerHTML usage detected (XSS sink risk)');
+  if (raw.includes('eval(')) findings.push('❌ eval() usage detected');
+
+  return findings.length ? findings : ['✅ No obvious XSS patterns detected'];
+}
+
+
+$('#xssScanBtn').addEventListener('click', () => {
+  const html = xssHtmlInput.value || '';
+  const result = scanXSS(html);
+
+  xssScanResult.textContent = result.join('\n');
+  appendLog('XSS scan executed');
+});
+
+
+$('#xssClearBtn').addEventListener('click', () => {
+  xssHtmlInput.value = '';
+  xssScanResult.textContent = '—';
+});
+
+
+
+
+
+const riskUrl = $('#riskUrl');
+const riskScore = $('#riskScore');
+const riskBar = $('#riskBar');
+const riskDetails = $('#riskDetails');
+
+function scoreURL(url) {
+  let score = 100;
+  const reasons = [];
+
+  let u;
+  try {
+    u = new URL(url);
+  } catch {
+    return { score: 0, reasons: ['Invalid URL'] };
+  }
+
+  const host = u.hostname.toLowerCase();
+  const full = url.toLowerCase();
+
+  
+  if (u.protocol !== 'https:') {
+    score -= 25;
+    reasons.push('❌ Not using HTTPS');
+  }
+
+  
+  if (/^\d+\.\d+\.\d+\.\d+$/.test(host)) {
+    score -= 30;
+    reasons.push('❌ IP-based domain (suspicious)');
+  }
+
+ 
+  const badTLD = ['.zip', '.xyz', '.top', '.click', '.loan', '.cam'];
+  if (badTLD.some(t => host.endsWith(t))) {
+    score -= 20;
+    reasons.push('⚠️ Risky TLD detected');
+  }
+
+  
+  const keywords = ['login', 'verify', 'password', 'bank', 'update', 'secure', 'account'];
+  if (keywords.some(k => full.includes(k))) {
+    score -= 15;
+    reasons.push('⚠️ Phishing-related keywords detected');
+  }
+
+  
+  if (full.length > 120) {
+    score -= 10;
+    reasons.push('⚠️ Unusually long URL');
+  }
+
+  
+  if ((host.match(/\./g) || []).length > 3) {
+    score -= 10;
+    reasons.push('⚠️ Excessive subdomains');
+  }
+
+ 
+  if (u.search.includes('redirect') || u.search.includes('url=')) {
+    score -= 15;
+    reasons.push('⚠️ Possible open redirect pattern');
+  }
+
+  
+  score = Math.max(0, Math.min(100, score));
+
+  return { score, reasons };
+}
+
+$('#riskBtn').addEventListener('click', () => {
+  const url = riskUrl.value.trim();
+  if (!url) return alert('URL وارد کن');
+
+  const res = scoreURL(url);
+
+  riskScore.textContent = res.score + '/100';
+
+  riskBar.style.width = res.score + '%';
+
+  if (res.score > 75) riskBar.style.background = 'var(--neon)';
+  else if (res.score > 40) riskBar.style.background = '#fbbf24';
+  else riskBar.style.background = 'var(--danger)';
+
+  riskDetails.textContent = res.reasons.length ? res.reasons.join('\n') : 'Clean URL';
+
+  appendLog('URL risk analyzed: ' + url + ' → ' + res.score);
+});
+
+  
+
+
+
+const sqliInput = $('#sqliInput');
+const sqliBtn = $('#sqliBtn');
+const sqliScore = $('#sqliScore');
+const sqliBar = $('#sqliBar');
+const sqliDetails = $('#sqliDetails');
+
+function detectSQLi(input) {
+  let score = 100;
+  const reasons = [];
+
+  const s = (input || '').toLowerCase();
+
+  
+  const patterns = [
+    /or\s+1=1/,
+    /' or '/,
+    /--/,
+    /#/,
+    /union\s+select/,
+    /drop\s+table/,
+    /information_schema/,
+    /insert\s+into/,
+    /sleep\s*\(/,
+    /benchmark\s*\(/,
+    /xp_/,
+  ];
+
+  patterns.forEach(p => {
+    if (p.test(s)) {
+      score -= 25;
+      reasons.push(`❌ SQLi pattern detected: ${p}`);
+    }
+  });
+
+  
+  if (s.includes("'") || s.includes('"')) {
+    score -= 10;
+    reasons.push("⚠️ Quote character detected");
+  }
+
+  
+  if (s.includes("1=1") || s.includes("1=2")) {
+    score -= 20;
+    reasons.push("❌ Boolean-based injection pattern");
+  }
+
+  
+  if (s.includes("sleep(") || s.includes("waitfor delay")) {
+    score -= 25;
+    reasons.push("❌ Time-based SQLi pattern");
+  }
+
+  
+  if (s.includes("union select")) {
+    score -= 30;
+    reasons.push("❌ UNION-based injection");
+  }
+
+  score = Math.max(0, Math.min(100, score));
+
+  return { score, reasons };
+}
+
+sqliBtn.addEventListener('click', () => {
+  const input = sqliInput.value.trim();
+  if (!input) return alert('ورودی وارد کن');
+
+  const res = detectSQLi(input);
+
+  sqliScore.textContent = res.score + '/100';
+  sqliBar.style.width = res.score + '%';
+
+  if (res.score > 75) sqliBar.style.background = 'var(--neon)';
+  else if (res.score > 40) sqliBar.style.background = '#fbbf24';
+  else sqliBar.style.background = 'var(--danger)';
+
+  sqliDetails.textContent =
+    res.reasons.length ? res.reasons.join('\n') : 'No SQL injection patterns detected';
+
+  appendLog('SQLi scan executed: ' + res.score);
+});
+
+
+
+
+
+
+const ipStart = document.getElementById("ipStart");
+const ipEnd = document.getElementById("ipEnd");
+const scanIpRangeBtn = document.getElementById("scanIpRangeBtn");
+const ipScanResult = document.getElementById("ipScanResult");
+
+function logIP(text) {
+  ipScanResult.textContent += text + "\n";
+}
+
+function resetIPLog() {
+  ipScanResult.textContent = "";
+}
+
+
+function ipToInt(ip) {
+  return ip.split('.').reduce((acc, part) => (acc << 8) + parseInt(part), 0);
+}
+
+
+function intToIp(int) {
+  return [
+    (int >>> 24) & 255,
+    (int >>> 16) & 255,
+    (int >>> 8) & 255,
+    int & 255
+  ].join('.');
+}
+
+
+async function checkIP(ip) {
+  const url = `http://${ip}`;
+  try {
+    await fetch(url, { mode: "no-cors", method: "GET" });
+    return "🟡 reachable (uncertain)";
+  } catch {
+    return "🔴 unreachable / blocked";
+  }
+}
+
+scanIpRangeBtn.addEventListener("click", async () => {
+  const start = ipStart.value.trim();
+  const end = ipEnd.value.trim();
+
+  if (!start || !end) {
+    alert("IP ها را وارد کن");
+    return;
+  }
+
+  resetIPLog();
+  logIP("🔍 Scanning IP Range...\n");
+
+  let startInt = ipToInt(start);
+  let endInt = ipToInt(end);
+
+  if (startInt > endInt) {
+    [startInt, endInt] = [endInt, startInt];
+  }
+
+  const maxScan = 20; 
+  let count = 0;
+
+  for (let i = startInt; i <= endInt; i++) {
+    if (count >= maxScan) {
+      logIP("\n⚠️ Limit reached (20 IP max for browser safety)");
+      break;
+    }
+
+    const ip = intToIp(i);
+    logIP(`Checking ${ip} ...`);
+
+    const result = await checkIP(ip);
+    logIP(`${ip} → ${result}\n`);
+
+    count++;
+  }
+
+  logIP("✅ Scan finished");
+});
+
+
+
+
+
+const leakInput = document.getElementById("leakInput");
+const leakCheckBtn = document.getElementById("leakCheckBtn");
+const leakResult = document.getElementById("leakResult");
+
+function leakLog(text) {
+  leakResult.textContent += text + "\n";
+}
+
+function resetLeak() {
+  leakResult.textContent = "";
+}
+
+
+function simpleLeakHeuristic(input) {
+  const leaks = [];
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isEmail = emailPattern.test(input);
+
+ 
+  if (isEmail) {
+    const domain = input.split("@")[1].toLowerCase();
+
+    if (domain.includes("gmail")) {
+      leaks.push("🟡 Gmail accounts frequently appear in public breaches (no direct check)");
+    }
+    if (domain.includes("yahoo")) {
+      leaks.push("🟡 Yahoo historical breach exposure risk");
+    }
+  }
+
+  if (input.length < 4) {
+    leaks.push("⚠️ Very short identifier — low confidence OSINT match");
+  }
+
+  return leaks;
+}
+
+
+
+async function checkHIBP(email) {
+  try {
+   
+    const res = await fetch(`https://haveibeenpwned.com/unifiedsearch/${encodeURIComponent(email)}`, {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0"
+      }
+    });
+
+    if (res.ok) {
+      return "🔴 LEAK FOUND (HIBP match)";
+    }
+    return "🟢 No leak found (HIBP)";
+  } catch {
+    return "⚠️ HIBP blocked (CORS) → unknown";
+  }
+}
+
+leakCheckBtn.addEventListener("click", async () => {
+  const input = leakInput.value.trim();
+
+  if (!input) {
+    alert("Email یا Username وارد کن");
+    return;
+  }
+
+  resetLeak();
+  leakLog("🔍 Checking Data Leaks...\n");
+
+  
+  const hints = simpleLeakHeuristic(input);
+  if (hints.length) {
+    leakLog("=== OSINT HINTS ===");
+    hints.forEach(h => leakLog(h));
+  }
+
+  leakLog("\n=== ONLINE CHECK ===");
+
+ 
+  const hibp = await checkHIBP(input);
+  leakLog(hibp);
+
+  leakLog("\n⚠️ Note: Real leak databases require backend API or proxy server.");
+});
+
+
+
+
+
+
+const usernameInput = document.getElementById("usernameInput");
+const userCheckResult = document.getElementById("userCheckResult");
+const checkBtn = document.getElementById("checkUserBtn");
+
+function addLine(text) {
+  userCheckResult.textContent += text + "\n";
+}
+
+function resetOutput() {
+  userCheckResult.textContent = "";
+}
+
+
+async function checkGitHub(username) {
+  try {
+    const res = await fetch(`https://api.github.com/users/${username}`);
+    if (res.status === 404) return "🟢 GitHub: Free";
+    if (res.ok) return "🔴 GitHub: Taken";
+    return "⚠️ GitHub: Unknown";
+  } catch {
+    return "❌ GitHub: Error";
+  }
+}
+
+
+async function checkReddit(username) {
+  try {
+    const res = await fetch(`https://www.reddit.com/user/${username}/about.json`);
+    if (res.status === 404) return "🟢 Reddit: Free";
+    if (res.ok) return "🔴 Reddit: Taken";
+    return "⚠️ Reddit: Unknown";
+  } catch {
+    return "❌ Reddit: Error";
+  }
+}
+
+
+async function checkFrontendSites(username) {
+  const sites = [
+    { name: "Instagram", url: `https://www.instagram.com/${username}/` },
+    { name: "TikTok", url: `https://www.tiktok.com/@${username}` },
+    { name: "Discord", url: `https://discord.com/users/${username}` }
+  ];
+
+  const results = [];
+
+  for (const site of sites) {
+    try {
+      await fetch(site.url, { method: "GET", mode: "no-cors" });
+      results.push(`🟡 ${site.name}: Unknown (CORS protected)`);
+    } catch {
+      results.push(`❌ ${site.name}: Not reachable`);
+    }
+  }
+
+  return results;
+}
+
+checkBtn.addEventListener("click", async () => {
+  const username = usernameInput.value.trim();
+
+  if (!username) {
+    alert("Username وارد کن");
+    return;
+  }
+
+  resetOutput();
+  addLine("🔍 Checking username...\n");
+
+  
+  const github = await checkGitHub(username);
+  const reddit = await checkReddit(username);
+
+  addLine("=== REAL RESULTS ===");
+  addLine(github);
+  addLine(reddit);
+
+ 
+  addLine("\n=== FRONTEND CHECK (LIMITED) ===");
+
+  const others = await checkFrontendSites(username);
+  others.forEach(addLine);
+
+  addLine("\n⚠️ Note: Instagram/TikTok/Discord cannot be verified from browser due to CORS.");
+});
+
+
+
+
+
+
+
+
+  
   function computeRating(results){
     let score = 0;
     if (results.https) score += 30;
@@ -608,7 +1218,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
     if (results.xfo) score += 10;
     if (results.ref) score += 10;
     if (results.xcto) score += 10;
-    // status 200 bonus
+    
     if (results.status && (results.status >=200 && results.status < 400)) score += 10;
     if (score >= 80) return 'A'; if (score >= 60) return 'B'; if (score >= 40) return 'C'; if (score >= 20) return 'D'; return 'F';
   }
@@ -627,7 +1237,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
     }
   }
 
-  // Try to read headers — may fail due to CORS
+  
   async function runSiteChecks(){
     const urlStr = urlInput.value.trim(); if(!urlStr){ alert('آدرس وارد کنید'); return; }
     if (!siteAck.checked){ alert('ابتدا تیک تأیید را بزنید'); return; }
@@ -636,18 +1246,18 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
     res_url.textContent = parsed.origin;
     res_https.textContent = parsed.protocol === 'https:' ? 'Yes' : 'No';
     res_status.textContent = '—';
-    // reset headers
+    
     [h_csp,h_hsts,h_xfo,h_ref,h_xcto].forEach(el => el.textContent = '—');
     res_rating.textContent = '—';
 
     const results = { https: parsed.protocol === 'https:', status: null, csp:false, hsts:false, xfo:false, ref:false, xcto:false };
 
-    // Attempt HEAD first (safer)
+    
     try {
       const head = await fetchWithTimeout(parsed.href, { method:'GET', mode:'cors', redirect:'follow', timeout:5000 });
       results.status = head.status;
       res_status.textContent = head.status;
-      // try to read security headers (if server sets CORS to allow)
+      
       const geth = (name) => {
         try { return head.headers.get(name); } catch(e){ return null; }
       };
@@ -667,32 +1277,32 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       res_rating.textContent = rating;
       appendLog('Site checks completed — status ' + head.status + ' — rating ' + rating);
     } catch (e) {
-      // network/CORS/abort
+      
       res_status.textContent = 'Request failed (CORS/Network/Timeout)';
       [h_csp,h_hsts,h_xfo,h_ref,h_xcto].forEach(el => el.textContent = 'Unavailable (CORS/Network)');
       res_rating.textContent = 'N/A';
       appendLog('Site checks failed (likely CORS/Network/Timeout). Try enabling CORS on target or use server-side tool.');
     }
 
-    // Port probe: limited attempt using no-cors fetch — note: result opaque but sometimes indicates reachable
+    
     const ports = [80,443,8080,8443];
     const tbody = portTable.tBodies[0];
-    // clear previous except header
+    
     tbody.innerHTML = '<tr><td>پورت</td><td>وضعیت</td></tr>';
     for (const p of ports){
       const row = document.createElement('tr');
       const td1 = document.createElement('td'); td1.textContent = p;
       const td2 = document.createElement('td'); td2.textContent = '—';
       row.appendChild(td1); row.appendChild(td2); tbody.appendChild(row);
-      // attempt probe only for same-origin scheme+host
+      
       const probeUrl = parsed.protocol + '//' + parsed.hostname + (p === (parsed.port || (parsed.protocol==='https:'?443:80)) ? '' : ':'+p) + '/';
       try {
-        // no-cors to avoid CORS error — response will be opaque but fetch success may indicate reachable
+        
         await fetchWithTimeout(probeUrl, { method:'GET', mode:'no-cors', timeout:3000 });
         td2.textContent = 'Reachable (probe OK — opaque)';
         td2.className = 'status-good';
       } catch (err){
-        // Could be blocked/unreachable
+        
         td2.textContent = 'Unreachable or blocked (CORS/Timeout)';
         td2.className = 'status-bad';
       }
@@ -701,25 +1311,33 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
 
   runBtn.addEventListener('click', runSiteChecks);
 
-  // small helpers & init
+  
   $('#aboutBtn').addEventListener('click', ()=> alert('MHMDPRGL'));
   $('#themeSelect').addEventListener('change', (e)=> {
     if (e.target.value === 'light') { document.documentElement.style.setProperty('--bg','#f6f8fb'); document.documentElement.style.setProperty('--card','#ffffff'); document.documentElement.style.setProperty('--neon','#157f5b'); document.documentElement.style.color='#06111a'; }
     else { document.documentElement.style.setProperty('--bg','#050607'); document.documentElement.style.setProperty('--neon','#39ff9a'); document.documentElement.style.color='inherit'; }
   });
 
-  // init UI
+  
   (function init(){
     Object.values(tabMap).forEach(el => el.style.display = 'none'); tabMap.dashboard.style.display = 'block';
-    // restore generator settings
+    
     try { const s = JSON.parse(localStorage.getItem('cst_gen')||'null'); if (s){ genLength.value = s.length||16; genLengthLabel.textContent = genLength.value; gLower.checked = !!s.lower; gUpper.checked = !!s.upper; gNumbers.checked = !!s.numbers; gSymbols.checked = !!s.symbols; } } catch(e){}
     appendLog('Cyber Security Toolkit loaded.');
   })();
 
-  // expose some functions for dev console
+  
   window.CST = { generatePassword, encryptText, decryptBuffer, luhnValidate, generateLuhnNumber, runSiteChecks };
 
 })();
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
