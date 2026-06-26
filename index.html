@@ -1050,6 +1050,10 @@ sqliBtn.addEventListener('click', () => {
 
 
 
+  
+
+
+
 const ipStart = document.getElementById("ipStart");
 const ipEnd = document.getElementById("ipEnd");
 const scanIpRangeBtn = document.getElementById("scanIpRangeBtn");
@@ -1221,6 +1225,198 @@ leakCheckBtn.addEventListener("click", async () => {
 
 
 
+
+
+// ================================
+// TEMP MAIL MODULE (Mail.tm)
+// ================================
+
+const API = "https://api.mail.tm";
+
+let tempToken = "";
+let currentEmail = "";
+let currentPassword = "";
+let currentMessageList = [];
+
+// ================================
+// DOM ELEMENTS
+// ================================
+const emailInput = document.getElementById("tempEmail");
+const passwordInput = document.getElementById("tempPassword");
+const mailTable = document.getElementById("mailTable");
+const mailContent = document.getElementById("mailContent");
+const mailCounter = document.getElementById("mailCounter");
+
+// ================================
+// INIT BUTTON EVENTS
+// ================================
+document.getElementById("generateMailboxBtn").onclick = createMailbox;
+document.getElementById("refreshInboxBtn").onclick = fetchInbox;
+document.getElementById("deleteMailboxBtn").onclick = deleteMailbox;
+document.getElementById("copyTempEmail").onclick = copyEmail;
+
+// ================================
+// GET DOMAIN
+// ================================
+async function getDomain() {
+    const res = await fetch(`${API}/domains`);
+    const data = await res.json();
+    return data["hydra:member"][0].domain;
+}
+
+// ================================
+// CREATE MAILBOX
+// ================================
+async function createMailbox() {
+    try {
+        const domain = await getDomain();
+
+        const user = "user" + Math.floor(Math.random() * 999999);
+
+        currentEmail = `${user}@${domain}`;
+        currentPassword = "Pass@" + Math.random().toString(36).slice(2, 10);
+
+        // create account
+        await fetch(`${API}/accounts`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                address: currentEmail,
+                password: currentPassword
+            })
+        });
+
+        await login();
+
+        emailInput.value = currentEmail;
+        passwordInput.value = currentPassword;
+
+        fetchInbox();
+
+    } catch (err) {
+        console.error("Mailbox error:", err);
+    }
+}
+
+// ================================
+// LOGIN
+// ================================
+async function login() {
+    const res = await fetch(`${API}/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            address: currentEmail,
+            password: currentPassword
+        })
+    });
+
+    const data = await res.json();
+    tempToken = data.token;
+}
+
+// ================================
+// FETCH INBOX
+// ================================
+async function fetchInbox() {
+    if (!tempToken) return;
+
+    const res = await fetch(`${API}/messages`, {
+        headers: {
+            Authorization: `Bearer ${tempToken}`
+        }
+    });
+
+    const data = await res.json();
+    currentMessageList = data["hydra:member"] || [];
+
+    renderInbox(currentMessageList);
+}
+
+// ================================
+// RENDER INBOX TABLE
+// ================================
+function renderInbox(messages) {
+    mailTable.innerHTML = "";
+
+    mailCounter.innerText = `Messages : ${messages.length}`;
+
+    if (messages.length === 0) {
+        mailTable.innerHTML = `
+            <tr>
+                <td colspan="3">No Messages</td>
+            </tr>
+        `;
+        return;
+    }
+
+    messages.forEach(msg => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${msg.from?.address || "-"}</td>
+            <td style="cursor:pointer;color:#4ea1ff">
+                ${msg.subject || "(no subject)"}
+            </td>
+            <td>${new Date(msg.createdAt).toLocaleString()}</td>
+        `;
+
+        row.onclick = () => readMessage(msg.id);
+
+        mailTable.appendChild(row);
+    });
+}
+
+// ================================
+// READ MESSAGE
+// ================================
+async function readMessage(id) {
+    const res = await fetch(`${API}/messages/${id}`, {
+        headers: {
+            Authorization: `Bearer ${tempToken}`
+        }
+    });
+
+    const data = await res.json();
+
+    mailContent.value = data.text || data.html || "(empty message)";
+}
+
+// ================================
+// COPY EMAIL
+// ================================
+function copyEmail() {
+    if (!currentEmail) return;
+
+    navigator.clipboard.writeText(currentEmail);
+    alert("Email copied!");
+}
+
+// ================================
+// DELETE MAILBOX (local reset)
+// ================================
+function deleteMailbox() {
+    tempToken = "";
+    currentEmail = "";
+    currentPassword = "";
+    currentMessageList = [];
+
+    emailInput.value = "";
+    passwordInput.value = "";
+    mailContent.value = "";
+
+    mailTable.innerHTML = `
+        <tr>
+            <td colspan="3">No Messages</td>
+        </tr>
+    `;
+
+    mailCounter.innerText = "Messages : 0";
+}
+
+
+
+  
 
 
 
