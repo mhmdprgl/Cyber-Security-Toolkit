@@ -93,7 +93,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       <button data-tab="payment">ابزار پرداخت</button>
       <button data-tab="site">Site Security</button>
       <button data-tab="tools">ابزارها</button>
-      <button data-tab="tempmail">📧 Email Generator</button>
+      <button data-tab="tempmail">📧 Temporary Email</button>
       <button data-tab="settings">تنظیمات</button>
     </nav>
 
@@ -418,6 +418,112 @@ Analyze SQLi Risk
         </div>
       </div>
 
+
+<!-- TEMP MAIL -->
+
+<div class="tab" id="tempmailTab" style="display:none">
+
+<h3>📧 Temporary Email</h3>
+
+<div class="card">
+
+<h4>Mailbox</h4>
+
+<label>Email Address</label>
+
+<div style="display:flex;gap:8px">
+
+<input id="tempEmail" readonly>
+
+<button class="small" id="copyTempEmail">
+کپی
+</button>
+
+</div>
+
+<label style="margin-top:10px">Password</label>
+
+<input id="tempPassword" readonly>
+
+<div style="display:flex;gap:8px;margin-top:15px">
+
+<button class="primary" id="generateMailboxBtn">
+Generate
+</button>
+
+<button class="small" id="deleteMailboxBtn">
+Delete
+</button>
+
+<button class="small" id="refreshInboxBtn">
+Refresh
+</button>
+
+</div>
+
+</div>
+
+<div class="card" style="margin-top:15px">
+
+<h4>Inbox</h4>
+
+<div id="mailCounter" class="hint">
+Messages : 0
+</div>
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>From</th>
+
+<th>Subject</th>
+
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody id="mailTable">
+
+<tr>
+
+<td colspan="3">
+
+No Messages
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="card" style="margin-top:15px">
+
+<h4>Message</h4>
+
+<textarea
+id="mailContent"
+rows="12"
+readonly
+placeholder="Select a message..."
+></textarea>
+
+</div>
+
+</div>
+
+
+
+
+      
       <!-- TOOLS -->
       <div class="tab" id="toolsTab" style="display:none">
         <h3>ابزارها</h3>
@@ -514,6 +620,7 @@ Check Leaks
     crypto: $('#cryptoTab'),
     payment: $('#paymentTab'),
     site: $('#siteTab'),
+    tempmail: $('#tempmailTab'),
     tools: $('#toolsTab'),
     settings: $('#settingsTab')
   };
@@ -523,7 +630,7 @@ Check Leaks
     const t = btn.dataset.tab;
     Object.values(tabMap).forEach(el => el.style.display = 'none');
     if (tabMap[t]) tabMap[t].style.display = 'block';
-    const titles = {dashboard:'داشبورد',password:'تستر رمز',generator:'سازنده رمز',crypto:'رمزنگاری',payment:'ابزار پرداخت',site:'Site Security',tools:'ابزارها',settings:'تنظیمات'};
+    const titles = {dashboard:'داشبورد',password:'تستر رمز',generator:'سازنده رمز',crypto:'رمزنگاری',payment:'ابزار پرداخت',site:'Site Security',tempmail:'Temporary Email',tools:'ابزارها',settings:'تنظیمات'};
     $('#mainTitle').textContent = titles[t] || 'Toolkit';
     $('#mainSubtitle').textContent = titles[t] ? 'ابزارهای مربوطه' : '';
   }));
