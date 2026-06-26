@@ -94,6 +94,7 @@ input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid
       <button data-tab="site">Site Security</button>
       <button data-tab="tools">ابزارها</button>
       <button data-tab="tempmail">📧 Email Generator</button>
+      <button onclick="openTab('aiSecurityTab')">AI Security Assistant</button>
       <button data-tab="settings">تنظیمات</button>
     </nav>
 
@@ -521,6 +522,55 @@ placeholder="Select a message..."
 </div>
 
 
+
+<!-- AI SECURITY ASSISTANT TAB -->
+<div class="tab" id="aiSecurityTab" style="display:none">
+
+  <h3>🧠 AI Security Assistant</h3>
+
+  <!-- PHONE -->
+  <div class="card">
+    <h4>📱 Phone Intelligence</h4>
+
+    <input id="aiPhoneInput" placeholder="+14158586273">
+
+    <button class="primary" id="checkPhoneAI">
+      Analyze Phone
+    </button>
+
+    <div id="phoneAIResult"></div>
+  </div>
+
+  <!-- EMAIL -->
+  <div class="card">
+    <h4>📧 Email Reputation</h4>
+
+    <input id="aiEmailInput" placeholder="example@email.com">
+
+    <button class="primary" id="checkEmailAI">
+      Analyze Email
+    </button>
+
+    <div id="emailAIResult"></div>
+  </div>
+
+  <!-- IP -->
+  <div class="card">
+    <h4>🌐 IP Intelligence</h4>
+
+    <input id="aiIPInput" placeholder="8.8.8.8">
+
+    <button class="primary" id="checkIPAI">
+      Analyze IP
+    </button>
+
+    <div id="ipAIResult"></div>
+  </div>
+
+</div>
+
+
+      
 
 
       
@@ -1416,6 +1466,144 @@ function deleteMailbox() {
 
 
 
+
+
+
+
+const ABSTRACT_API_KEY = "b058b5cad040493096ae1bc02937c57f";
+
+/* =========================
+   PHONE INTELLIGENCE
+========================= */
+document.getElementById("checkPhoneAI").addEventListener("click", async () => {
+    const phone = document.getElementById("aiPhoneInput").value.trim();
+    const box = document.getElementById("phoneAIResult");
+
+    if (!phone) return box.innerHTML = "❌ Enter phone number";
+
+    box.innerHTML = "⏳ Analyzing...";
+
+    try {
+        const res = await fetch(
+            `https://phonevalidation.abstractapi.com/v1/?api_key=${ABSTRACT_API_KEY}&phone=${encodeURIComponent(phone)}`
+        );
+
+        const data = await res.json();
+
+        if (!data.valid) {
+            box.innerHTML = "❌ Invalid or risky number";
+            return;
+        }
+
+        box.innerHTML = `
+            <div class="card">
+                <p>✅ Valid Number</p>
+                <p>Country: ${data.country?.name || "-"}</p>
+                <p>Carrier: ${data.carrier || "-"}</p>
+                <p>Type: ${data.type || "-"}</p>
+                <p>Format: ${data.format?.international || "-"}</p>
+            </div>
+        `;
+    } catch (e) {
+        box.innerHTML = "⚠️ API error";
+    }
+});
+
+
+const ABSTRACT_API_KEY = "b058b5cad040493096ae1bc02937c57f";
+
+document.getElementById("checkEmailAI").addEventListener("click", async () => {
+    const email = document.getElementById("aiEmailInput").value.trim();
+    const box = document.getElementById("emailAIResult");
+
+    if (!email) {
+        box.innerHTML = "❌ Please enter email";
+        return;
+    }
+
+    box.innerHTML = "⏳ Checking email reputation...";
+
+    try {
+        const res = await fetch(
+            `https://emailvalidation.abstractapi.com/v1/?api_key=${ABSTRACT_API_KEY}&email=${encodeURIComponent(email)}`
+        );
+
+        const data = await res.json();
+
+        if (!data || !data.email) {
+            box.innerHTML = "❌ API error";
+            return;
+        }
+
+        const quality = data.quality_score || 0;
+        const isDisposable = data.is_disposable_email?.value;
+        const isFree = data.is_free_email?.value;
+        const deliverability = data.deliverability;
+
+        let risk = "LOW";
+
+        if (isDisposable) risk = "HIGH";
+        else if (quality < 0.5) risk = "MEDIUM";
+
+        box.innerHTML = `
+            <div class="card">
+                <p>📧 Email: ${data.email}</p>
+                <p>📊 Quality Score: ${quality}</p>
+                <p>📨 Deliverability: ${deliverability}</p>
+                <p>🧪 Free Email: ${isFree}</p>
+                <p>🚨 Disposable: ${isDisposable}</p>
+                <p>⚠️ Risk Level: ${risk}</p>
+            </div>
+        `;
+
+    } catch (err) {
+        box.innerHTML = "⚠️ Network/API error";
+    }
+});
+
+
+/* =========================
+   IP INTELLIGENCE
+   API: ipwho.is (free)
+========================= */
+document.getElementById("checkIPAI").addEventListener("click", async () => {
+    const ip = document.getElementById("aiIPInput").value.trim();
+    const box = document.getElementById("ipAIResult");
+
+    if (!ip) return box.innerHTML = "❌ Enter IP";
+
+    box.innerHTML = "⏳ Checking IP...";
+
+    try {
+        const res = await fetch(`https://ipwho.is/${ip}`);
+        const data = await res.json();
+
+        if (!data.success) {
+            box.innerHTML = "❌ Invalid IP";
+            return;
+        }
+
+        box.innerHTML = `
+            <div class="card">
+                <p>🌍 Country: ${data.country}</p>
+                <p>🏙 City: ${data.city}</p>
+                <p>📡 ISP: ${data.connection?.isp || "-"}</p>
+                <p>🛡 Type: ${data.type || "-"}</p>
+            </div>
+        `;
+    } catch (e) {
+        box.innerHTML = "⚠️ IP API error";
+    }
+});
+
+
+
+
+
+
+
+
+  
   
 
 
