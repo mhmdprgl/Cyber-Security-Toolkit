@@ -1552,121 +1552,97 @@ function deleteMailbox() {
 
 
 
-const PHONE_API =
-"b058b5cad040493096ae1bc02937c57f";
-
-const EMAIL_API =
-"5cce8ad3d7864ca28602625c0d7ff328";
-
-const IP_API =
-"db2bd2826c234ddb9e8747b350691926";
-  
-
-  document.getElementById("phoneCheckBtn")
-.addEventListener("click", async ()=>{
-
-const phone =
-document.getElementById("phoneInput").value.trim();
-
-if(!phone) return;
-
-const result =
-document.getElementById("phoneResult");
-
-result.textContent="Loading...";
-
-try{
-
-const res =
-await fetch(
-`https://phonevalidation.abstractapi.com/v1/?api_key=${PHONE_API}&phone=${encodeURIComponent(phone)}`
-);
-
-const data = await res.json();
-
-result.textContent =
-JSON.stringify(data,null,2);
-
-}catch(e){
-
-result.textContent=e;
-
-}
-
-});
-  
-
-document.getElementById("emailCheckBtn")
-.addEventListener("click", async ()=>{
-
-const email =
-document.getElementById("emailInput").value.trim();
-
-if(!email) return;
-
-const result =
-document.getElementById("emailResult");
-
-result.textContent="Loading...";
-
-try{
-
-const res =
-await fetch(
-`https://emailvalidation.abstractapi.com/v1/?api_key=${EMAIL_API}&email=${encodeURIComponent(email)}`
-);
-
-const data =
-await res.json();
-
-result.textContent =
-JSON.stringify(data,null,2);
-
-}catch(e){
-
-result.textContent=e;
-
-}
-
-});
-
-  document.getElementById("ipCheckBtn")
-.addEventListener("click", async ()=>{
-
-const ip =
-document.getElementById("ipInput").value.trim();
-
-if(!ip) return;
-
-const result =
-document.getElementById("ipResult");
-
-result.textContent="Loading...";
-
-try{
-
-const res =
-await fetch(
-`https://ipgeolocation.abstractapi.com/v1/?api_key=${IP_API}&ip_address=${encodeURIComponent(ip)}`
-);
-
-const data =
-await res.json();
-
-result.textContent =
-JSON.stringify(data,null,2);
-
-}catch(e){
-
-result.textContent=e;
-
-}
-
-});
-
 
    
+document.addEventListener("DOMContentLoaded", () => {
 
+  /* ================= PHONE ================= */
+  const PHONE_API = "num_live_8hC7ywX2mP5J4w3WCCSqNEAO9L8xFYikRyGmdPyH";
+
+  document.getElementById("phoneCheckBtn").addEventListener("click", async () => {
+    const phone = document.getElementById("phoneInput").value.trim();
+    const result = document.getElementById("phoneResult");
+
+    if (!phone) return;
+
+    result.textContent = "Loading...";
+
+    try {
+      const res = await fetch(
+        `https://api.numlookupapi.com/v1/validate/${encodeURIComponent(phone)}`,
+        {
+          method: "GET",
+          headers: {
+            apikey: PHONE_API
+          }
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data?.message || "Phone API Error");
+
+      result.textContent = JSON.stringify(data, null, 2);
+
+    } catch (e) {
+      result.textContent = e.message;
+    }
+  });
+
+
+  /* ================= EMAIL ================= */
+  document.getElementById("emailCheckBtn").addEventListener("click", async () => {
+    const email = document.getElementById("emailInput").value.trim();
+    const result = document.getElementById("emailResult");
+
+    if (!email) return;
+
+    result.textContent = "Loading...";
+
+    try {
+      const res = await fetch(
+        `https://api.eva.pingutil.com/email?email=${encodeURIComponent(email)}`
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error("Email API Error");
+
+      result.textContent = JSON.stringify(data, null, 2);
+
+    } catch (e) {
+      result.textContent = e.message;
+    }
+  });
+
+
+  /* ================= IP ================= */
+  document.getElementById("ipCheckBtn").addEventListener("click", async () => {
+    const ip = document.getElementById("ipInput").value.trim();
+    const result = document.getElementById("ipResult");
+
+    if (!ip) return;
+
+    result.textContent = "Loading...";
+
+    try {
+      const url = ip
+        ? `https://ipwho.is/${encodeURIComponent(ip)}`
+        : `https://ipwho.is/`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!res.ok) throw new Error("IP API Error");
+
+      result.textContent = JSON.stringify(data, null, 2);
+
+    } catch (e) {
+      result.textContent = e.message;
+    }
+  });
+
+});
 
 
 
