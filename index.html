@@ -1552,47 +1552,117 @@ function deleteMailbox() {
 
 
 
+const PHONE_API =
+"b058b5cad040493096ae1bc02937c57f";
 
-const ABSTRACT_API_KEY = "b058b5cad040493096ae1bc02937c57f";
+const EMAIL_API =
+"5cce8ad3d7864ca28602625c0d7ff328";
 
-/* =========================
-   PHONE INTELLIGENCE
-========================= */
-document.getElementById("checkPhoneAI").addEventListener("click", async () => {
-    const phone = document.getElementById("aiPhoneInput").value.trim();
-    const box = document.getElementById("phoneAIResult");
+const IP_API =
+"db2bd2826c234ddb9e8747b350691926";
+  
 
-    if (!phone) return box.innerHTML = "❌ Enter phone number";
+  document.getElementById("phoneCheckBtn")
+.addEventListener("click", async ()=>{
 
-    box.innerHTML = "⏳ Analyzing...";
+const phone =
+document.getElementById("phoneInput").value.trim();
 
-    try {
-        const res = await fetch(
-            `https://phonevalidation.abstractapi.com/v1/?api_key=${ABSTRACT_API_KEY}&phone=${encodeURIComponent(phone)}`
-        );
+if(!phone) return;
 
-        const data = await res.json();
+const result =
+document.getElementById("phoneResult");
 
-        if (!data.valid) {
-            box.innerHTML = "❌ Invalid or risky number";
-            return;
-        }
+result.textContent="Loading...";
 
-        box.innerHTML = `
-            <div class="card">
-                <p>✅ Valid Number</p>
-                <p>Country: ${data.country?.name || "-"}</p>
-                <p>Carrier: ${data.carrier || "-"}</p>
-                <p>Type: ${data.type || "-"}</p>
-                <p>Format: ${data.format?.international || "-"}</p>
-            </div>
-        `;
-    } catch (e) {
-        box.innerHTML = "⚠️ API error";
-    }
+try{
+
+const res =
+await fetch(
+`https://phonevalidation.abstractapi.com/v1/?api_key=${PHONE_API}&phone=${encodeURIComponent(phone)}`
+);
+
+const data = await res.json();
+
+result.textContent =
+JSON.stringify(data,null,2);
+
+}catch(e){
+
+result.textContent=e;
+
+}
+
+});
+  
+
+document.getElementById("emailCheckBtn")
+.addEventListener("click", async ()=>{
+
+const email =
+document.getElementById("emailInput").value.trim();
+
+if(!email) return;
+
+const result =
+document.getElementById("emailResult");
+
+result.textContent="Loading...";
+
+try{
+
+const res =
+await fetch(
+`https://emailvalidation.abstractapi.com/v1/?api_key=${EMAIL_API}&email=${encodeURIComponent(email)}`
+);
+
+const data =
+await res.json();
+
+result.textContent =
+JSON.stringify(data,null,2);
+
+}catch(e){
+
+result.textContent=e;
+
+}
+
 });
 
+  document.getElementById("ipCheckBtn")
+.addEventListener("click", async ()=>{
 
+const ip =
+document.getElementById("ipInput").value.trim();
+
+if(!ip) return;
+
+const result =
+document.getElementById("ipResult");
+
+result.textContent="Loading...";
+
+try{
+
+const res =
+await fetch(
+`https://ipgeolocation.abstractapi.com/v1/?api_key=${IP_API}&ip_address=${encodeURIComponent(ip)}`
+);
+
+const data =
+await res.json();
+
+result.textContent =
+JSON.stringify(data,null,2);
+
+}catch(e){
+
+result.textContent=e;
+
+}
+
+});
 
 
    
