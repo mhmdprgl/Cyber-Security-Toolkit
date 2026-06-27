@@ -1591,29 +1591,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ================= EMAIL ================= */
-  document.getElementById("emailCheckBtn").addEventListener("click", async () => {
-    const email = document.getElementById("emailInput").value.trim();
-    const result = document.getElementById("emailResult");
+ document.getElementById("emailCheckBtn").addEventListener("click", async () => {
+  const email = document.getElementById("emailInput").value.trim();
+  const result = document.getElementById("emailResult");
 
-    if (!email) return;
+  if (!email) return;
 
-    result.textContent = "Loading...";
+  result.textContent = "Loading...";
 
-    try {
-      const res = await fetch(
-        `https://api.eva.pingutil.com/email?email=${encodeURIComponent(email)}`
-      );
+  try {
+    const res = await fetch(
+      `https://api.eva.pingutil.com/email?email=${encodeURIComponent(email)}`
+    );
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) throw new Error("Email API Error");
-
-      result.textContent = JSON.stringify(data, null, 2);
-
-    } catch (e) {
-      result.textContent = e.message;
+    // 🔥 مهم: چک واقعی API
+    if (data?.data === undefined && data?.success === false) {
+      throw new Error(data?.message || "Invalid email");
     }
-  });
+
+    result.textContent = JSON.stringify(data, null, 2);
+
+  } catch (e) {
+    result.textContent = "Email Error: " + e.message;
+  }
+});
+    
 
 
   /* ================= IP ================= */
