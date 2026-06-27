@@ -1591,7 +1591,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ================= EMAIL ================= */
- document.getElementById("emailCheckBtn").addEventListener("click", async () => {
+document.getElementById("emailCheckBtn").addEventListener("click", async () => {
   const email = document.getElementById("emailInput").value.trim();
   const result = document.getElementById("emailResult");
 
@@ -1601,15 +1601,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   try {
     const res = await fetch(
-      `https://api.eva.pingutil.com/email?email=${encodeURIComponent(email)}`
+      `https://api.mailcheck.ai/email/${encodeURIComponent(email)}`
     );
 
     const data = await res.json();
-
-    // 🔥 مهم: چک واقعی API
-    if (data?.data === undefined && data?.success === false) {
-      throw new Error(data?.message || "Invalid email");
-    }
 
     result.textContent = JSON.stringify(data, null, 2);
 
