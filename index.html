@@ -747,6 +747,7 @@ Check Leaks
   const tabs = $$('.nav button');
   const tabMap = {
     dashboard: $('#dashboardTab'),
+    aiTab: $('#aiTab'),
     password: $('#passwordTab'),
     generator: $('#generatorTab'),
     crypto: $('#cryptoTab'),
@@ -762,7 +763,7 @@ Check Leaks
     const t = btn.dataset.tab;
     Object.values(tabMap).forEach(el => el.style.display = 'none');
     if (tabMap[t]) tabMap[t].style.display = 'block';
-    const titles = {dashboard:'داشبورد',password:'تستر رمز',generator:'سازنده رمز',crypto:'رمزنگاری',payment:'ابزار پرداخت',site:'Site Security',tempmail:'Temporary Email',tools:'ابزارها',settings:'تنظیمات'};
+    const titles = {dashboard:'داشبورد',aiTab:'AI Security Assistant',password:'تستر رمز',generator:'سازنده رمز',crypto:'رمزنگاری',payment:'ابزار پرداخت',site:'Site Security',tempmail:'Temporary Email',tools:'ابزارها',settings:'تنظیمات'};
     $('#mainTitle').textContent = titles[t] || 'Toolkit';
     $('#mainSubtitle').textContent = titles[t] ? 'ابزارهای مربوطه' : '';
   }));
